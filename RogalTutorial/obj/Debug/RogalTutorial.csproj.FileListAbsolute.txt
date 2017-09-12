@@ -1,1 +1,13 @@
 c:\users\hubert.checinski\documents\visual studio 2015\Projects\RogalTutorial\RogalTutorial\bin\Debug\RogalTutorial.exe.config
+C:\GitHub\Rogal\RogalTutorial\bin\Debug\RogalTutorial.exe.config
+C:\GitHub\Rogal\RogalTutorial\bin\Debug\RogalTutorial.exe
+C:\GitHub\Rogal\RogalTutorial\bin\Debug\RogalTutorial.pdb
+C:\GitHub\Rogal\RogalTutorial\obj\Debug\RogalTutorial.csprojResolveAssemblyReference.cache
+C:\GitHub\Rogal\RogalTutorial\obj\Debug\RogalTutorial.exe
+C:\GitHub\Rogal\RogalTutorial\obj\Debug\RogalTutorial.pdb
+C:\GitHub\Rogal\RogalTutorial\bin\Debug\terminal8x8.png
+C:\GitHub\Rogal\RogalTutorial\bin\Debug\OpenTK.dll
+C:\GitHub\Rogal\RogalTutorial\bin\Debug\RLNET.dll
+C:\GitHub\Rogal\RogalTutorial\bin\Debug\RogueSharp.dll
+C:\GitHub\Rogal\RogalTutorial\bin\Debug\OpenTK.xml
+C:\GitHub\Rogal\RogalTutorial\bin\Debug\RogueSharp.xml
