@@ -15,7 +15,7 @@ namespace RogalTutorial
 
         static void Main(string[] args)
         {
-            rootConsole = new RLRootConsole("terminal8x8.png", SCREEN_WIDTH, SCREEN_HIGHT, 8, 8, 1, "Rogal tutorial");
+            rootConsole = new RLRootConsole("terminal8x8_gs_ro.png", SCREEN_WIDTH, SCREEN_HIGHT, 8, 8, 1, "Rogal tutorial");
             rootConsole.Render += rootConsole_Render;
             rootConsole.Run();
 
@@ -24,7 +24,7 @@ namespace RogalTutorial
         private static void rootConsole_Render(object sender, UpdateEventArgs e)
         {
             rootConsole.Clear();
-            rootConsole.Print(1, 1, "Witaj świecie", RLColor.White);
+            rootConsole.Print(1, 1, "Witaj Świecie", RLColor.White);
             rootConsole.Draw();
         }
     }
