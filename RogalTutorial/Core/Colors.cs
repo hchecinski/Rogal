@@ -20,7 +20,11 @@ namespace RogalTutorial.Core
         public static RLColor Wall = Swatch.Secondary;
         public static RLColor WallBackgroundFov = Swatch.SecondaryDarker;
         public static RLColor WallFov = Swatch.SecondaryLighter;
+        
+        public static RLColor TextHeading = RLColor.White;
+        public static RLColor Text = Swatch.DbLight;
+        public static RLColor Gold = Swatch.DbSun;
+        public static RLColor KoboldColor = Swatch.DbBrightWood;
 
-        public static RLColor TextHeading = Swatch.DbLight;
     }
 }
