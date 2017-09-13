@@ -43,6 +43,7 @@ namespace RogalTutorial
         public static DungeonMap DungeonMap { get; private set; }
         public static CommandSystem CommandSystem { get; private set; }
         public static MessageLog MessageLog { get; private set; }
+        public static SchedulingSystem SchedulingSystem { get; private set; }
 
         // We can use this instance of IRandom throughout our game when generating random number
         public static IRandom Random { get; private set; }
@@ -52,7 +53,7 @@ namespace RogalTutorial
             // Establish the seed for the random number generator from the current time
             int seed = (int)DateTime.UtcNow.Ticks;
             Random = new DotNetRandom(seed);
-
+            SchedulingSystem = new SchedulingSystem();
             // This must be the exact name of the bitmap font file we are using or it will error.
             string fontFileName = "terminal8x8.png";
 
@@ -102,50 +103,57 @@ namespace RogalTutorial
         {
             bool didPlayerAct = false;
             RLKeyPress keyPress = _rootConsole.Keyboard.GetKeyPress();
-
-            if (keyPress != null)
+            if (CommandSystem.IsPlayerTurn)
             {
-                if (keyPress.Key == RLKey.Up || keyPress.Key == RLKey.Keypad8)
+                if (keyPress != null)
                 {
-                    didPlayerAct = CommandSystem.MovePlayer(Direction.Up);
+                    if (keyPress.Key == RLKey.Up || keyPress.Key == RLKey.Keypad8)
+                    {
+                        didPlayerAct = CommandSystem.MovePlayer(Direction.Up);
+                    }
+                    else if (keyPress.Key == RLKey.Down || keyPress.Key == RLKey.Keypad2)
+                    {
+                        didPlayerAct = CommandSystem.MovePlayer(Direction.Down);
+                    }
+                    else if (keyPress.Key == RLKey.Left || keyPress.Key == RLKey.Keypad4)
+                    {
+                        didPlayerAct = CommandSystem.MovePlayer(Direction.Left);
+                    }
+                    else if (keyPress.Key == RLKey.Right || keyPress.Key == RLKey.Keypad6)
+                    {
+                        didPlayerAct = CommandSystem.MovePlayer(Direction.Right);
+                    }
+                    else if (keyPress.Key == RLKey.Keypad7)
+                    {
+                        didPlayerAct = CommandSystem.MovePlayer(Direction.UpLeft);
+                    }
+                    else if (keyPress.Key == RLKey.Keypad9)
+                    {
+                        didPlayerAct = CommandSystem.MovePlayer(Direction.UpRight);
+                    }
+                    else if (keyPress.Key == RLKey.Keypad1)
+                    {
+                        didPlayerAct = CommandSystem.MovePlayer(Direction.DownLeft);
+                    }
+                    else if (keyPress.Key == RLKey.Keypad3)
+                    {
+                        didPlayerAct = CommandSystem.MovePlayer(Direction.DownRight);
+                    }
+                    else if (keyPress.Key == RLKey.Escape)
+                    {
+                        _rootConsole.Close();
+                    }
                 }
-                else if (keyPress.Key == RLKey.Down || keyPress.Key == RLKey.Keypad2)
+
+                if (didPlayerAct)
                 {
-                    didPlayerAct = CommandSystem.MovePlayer(Direction.Down);
-                }
-                else if (keyPress.Key == RLKey.Left || keyPress.Key == RLKey.Keypad4)
-                {
-                    didPlayerAct = CommandSystem.MovePlayer(Direction.Left);
-                }
-                else if (keyPress.Key == RLKey.Right || keyPress.Key == RLKey.Keypad6)
-                {
-                    didPlayerAct = CommandSystem.MovePlayer(Direction.Right);
-                }
-                else if (keyPress.Key == RLKey.Keypad7)
-                {
-                    didPlayerAct = CommandSystem.MovePlayer(Direction.UpLeft);
-                }
-                else if (keyPress.Key == RLKey.Keypad9)
-                {
-                    didPlayerAct = CommandSystem.MovePlayer(Direction.UpRight);
-                }
-                else if (keyPress.Key == RLKey.Keypad1)
-                {
-                    didPlayerAct = CommandSystem.MovePlayer(Direction.DownLeft);
-                }
-                else if (keyPress.Key == RLKey.Keypad3)
-                {
-                    didPlayerAct = CommandSystem.MovePlayer(Direction.DownRight);
-                }
-                else if (keyPress.Key == RLKey.Escape)
-                {
-                    _rootConsole.Close();
+                    _renderRequired = true;
+                    CommandSystem.EndPlayerTurn();
                 }
             }
-
-            if (didPlayerAct)
+            else
             {
-
+                CommandSystem.ActivateMonsters();
                 _renderRequired = true;
             }
         }

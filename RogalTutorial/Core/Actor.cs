@@ -9,7 +9,7 @@ using RogueSharp;
 
 namespace RogalTutorial.Core
 {
-    public class Actor : IActor, IDrawable
+    public class Actor : IActor, IDrawable, IScheduleable
     {
         // IActor
         private int _attack;
@@ -196,6 +196,14 @@ namespace RogalTutorial.Core
             set
             {
                 _y = value;
+            }
+        }
+
+        public int Time
+        {
+            get
+            {
+                return Speed;
             }
         }
 
