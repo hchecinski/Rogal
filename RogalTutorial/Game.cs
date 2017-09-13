@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RLNET;
+using RogalTutorial.Core;
+using RogalTutorial.Systems;
 
 namespace RogalTutorial
 {
@@ -34,6 +36,8 @@ namespace RogalTutorial
         private static readonly int _inventoryHeight = 11;
         private static RLConsole _inventoryConsole;
 
+        public static DungeonMap DungeonMap { get; private set;
+        }
         public static void Main()
         {
             _rootConsole = new RLRootConsole("terminal8x8.png", _screenWidth, _screenHeight, 8, 8, 1f, "RougeSharp V3 Tutorial - Level 1");
@@ -44,6 +48,8 @@ namespace RogalTutorial
             _statConsole = new RLConsole(_statWidth, _statHeight);
             _inventoryConsole = new RLConsole(_inventoryWidth, _inventoryHeight);
 
+            MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight);
+            DungeonMap = mapGenerator.CreateMap();
             // Spatrzone z monogame = Update odpowiada za logikę aplikacji
             _rootConsole.Update += OnRootConsoleUpdate;
             // Render odpowiada za rysowanie 
@@ -72,10 +78,13 @@ namespace RogalTutorial
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)
         {
             // Blit the sub consoles to the root console in the correct locations
+            //Która konsola, cała wielkość konsoli, korzeń, 
             RLConsole.Blit(_mapConsole, 0, 0, _mapWidth, _mapHeight, _rootConsole, 0, _inventoryHeight);
             RLConsole.Blit(_statConsole, 0, 0, _statWidth, _statHeight, _rootConsole, _mapWidth, 0);
             RLConsole.Blit(_messageConsole, 0, 0, _messageWidth, _messageHeight, _rootConsole, 0, _screenHeight - _messageHeight);
             RLConsole.Blit(_inventoryConsole, 0, 0, _inventoryWidth, _inventoryHeight, _rootConsole, 0, 0);
+
+            DungeonMap.Draw(_mapConsole);
 
             _rootConsole.Draw();
         }

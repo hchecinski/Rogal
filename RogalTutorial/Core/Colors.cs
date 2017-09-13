@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RogalTutorial.Core
 {
-    public class Color
+    public class Colors
     {
         public static RLColor FloorBackground = RLColor.Black;
         public static RLColor Floor = Swatch.AlternateDarkest;
