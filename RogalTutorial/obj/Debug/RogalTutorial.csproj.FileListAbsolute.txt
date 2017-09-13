@@ -11,7 +11,3 @@ C:\GitHub\Rogal\RogalTutorial\bin\Debug\RLNET.dll
 C:\GitHub\Rogal\RogalTutorial\bin\Debug\RogueSharp.dll
 C:\GitHub\Rogal\RogalTutorial\bin\Debug\OpenTK.xml
 C:\GitHub\Rogal\RogalTutorial\bin\Debug\RogueSharp.xml
-C:\GitHub\Rogal\RogalTutorial\bin\Debug\Terminal16x16.bmp
-C:\GitHub\Rogal\RogalTutorial\bin\Debug\verdana_regular_8.png
-C:\GitHub\Rogal\RogalTutorial\bin\Debug\terminal8x8_gs_ro.png
-C:\GitHub\Rogal\RogalTutorial\bin\Debug\ExportedFont.bmp
