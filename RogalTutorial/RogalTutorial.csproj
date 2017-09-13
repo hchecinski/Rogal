@@ -62,6 +62,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ExportedFont.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Terminal16x16.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

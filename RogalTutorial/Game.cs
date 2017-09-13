@@ -15,10 +15,9 @@ namespace RogalTutorial
 
         static void Main(string[] args)
         {
-            rootConsole = new RLRootConsole("terminal8x8_gs_ro.png", SCREEN_WIDTH, SCREEN_HIGHT, 8, 8, 1, "Rogal tutorial");
+            rootConsole = new RLRootConsole("terminal8x8.bmp", SCREEN_WIDTH, SCREEN_HIGHT, 14, 8, 1, "Rogal tutorial");
             rootConsole.Render += rootConsole_Render;
             rootConsole.Run();
-
         }
 
         private static void rootConsole_Render(object sender, UpdateEventArgs e)
