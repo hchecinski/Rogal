@@ -38,6 +38,8 @@ namespace RogalTutorial
 
         public static DungeonMap DungeonMap { get; private set;
         }
+        public static Player Player { get; internal set; }
+
         public static void Main()
         {
             _rootConsole = new RLRootConsole("terminal8x8.png", _screenWidth, _screenHeight, 8, 8, 1f, "RougeSharp V3 Tutorial - Level 1");
@@ -48,8 +50,11 @@ namespace RogalTutorial
             _statConsole = new RLConsole(_statWidth, _statHeight);
             _inventoryConsole = new RLConsole(_inventoryWidth, _inventoryHeight);
 
+            Player = new Player();
             MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight);
             DungeonMap = mapGenerator.CreateMap();
+
+            DungeonMap.UpdatePlayerFieldOfView();
             // Spatrzone z monogame = Update odpowiada za logikę aplikacji
             _rootConsole.Update += OnRootConsoleUpdate;
             // Render odpowiada za rysowanie 
@@ -62,7 +67,6 @@ namespace RogalTutorial
         private static void OnRootConsoleUpdate(object sender, UpdateEventArgs e)
         {
             _mapConsole.SetBackColor(0, 0, _mapWidth, _mapHeight, RLColor.Black);
-            _mapConsole.Print(1, 1, "Map", RLColor.White);
 
             _messageConsole.SetBackColor(0, 0, _messageWidth, _messageHeight, RLColor.Gray);
             _messageConsole.Print(1, 1, "Messages", RLColor.White);
@@ -85,7 +89,7 @@ namespace RogalTutorial
             RLConsole.Blit(_inventoryConsole, 0, 0, _inventoryWidth, _inventoryHeight, _rootConsole, 0, 0);
 
             DungeonMap.Draw(_mapConsole);
-
+            Player.Draw(_mapConsole, DungeonMap);
             _rootConsole.Draw();
         }
     }
