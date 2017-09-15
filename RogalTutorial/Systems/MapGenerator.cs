@@ -61,8 +61,7 @@ namespace RogalTutorial.Systems
         private void PlacePlayer()
         {
             Player player = Game.Player;
-            if (player == null)
-                player = new Player();
+            if (player == null) player = new Player();
 
             //Narysuj gracza w centrum pierwszego stworzonego pokoju
             player.X = _map.Rooms[0].Center.X;
@@ -93,13 +92,11 @@ namespace RogalTutorial.Systems
                 var newRoom = new Rectangle(roomXPosition, roomYPosition, roomWidth, roomHeight);
 
                 // Jeśli się nie przecina to dodaj pokój do listy pokojów w mapie
-                if (!_map.Rooms.Any(room => newRoom.Intersects(room)))
-                    _map.Rooms.Add(newRoom);
+                if (!_map.Rooms.Any(room => newRoom.Intersects(room))) _map.Rooms.Add(newRoom);
             }
 
             // Zamienia stworzone kwadraty w pokoje
-            foreach (Rectangle room in _map.Rooms)
-                CreateRoom(room);
+            foreach (Rectangle room in _map.Rooms) CreateRoom(room);
 
             // Iteruję się po stworzonych pokojach
             for (int r = 1; r < _map.Rooms.Count; r++)
@@ -122,6 +119,8 @@ namespace RogalTutorial.Systems
                     CreateHorizontalTunnel(previousRoomCenterX, currentRoomCenterX, currentRoomCenterY);
                 }
             }
+
+            foreach (Rectangle room in _map.Rooms) CreateDoor(room);
 
             //Ustaw aktorów
             PlacePlayer();
@@ -191,6 +190,55 @@ namespace RogalTutorial.Systems
                     }
                 }
             }
+        }
+
+        private void CreateDoor(Rectangle room)
+        {
+            // Pobranie krawędzi pokoju
+            int xMin = room.Left;
+            int xMax = room.Right;
+            int yMin = room.Top;
+            int yMax = room.Bottom;
+
+            // W granicach pokoju włóż opowiednie komórki
+            List<Cell> borderCells = _map.GetCellsAlongLine(xMin, yMin, xMax, yMin).ToList();
+            borderCells.AddRange(_map.GetCellsAlongLine(xMin, yMin, xMin, yMax));
+            borderCells.AddRange(_map.GetCellsAlongLine(xMin, yMax, xMax, yMax));
+            borderCells.AddRange(_map.GetCellsAlongLine(xMax, yMin, xMax, yMax));
+
+            foreach (Cell cell in borderCells)
+            {
+                if (IsPotentialDoor(cell))
+                {
+                    _map.SetCellProperties(cell.X, cell.Y, false, true);
+                    _map.Doors.Add(new Door { X = cell.X, Y = cell.Y, IsOpen = false });
+                }
+            }
+        }
+
+        private bool IsPotentialDoor( Cell cell)
+        {
+            if (!cell.IsWalkable) return false;
+
+            Cell right = _map.GetCell(cell.X + 1, cell.Y);
+            Cell left = _map.GetCell(cell.X - 1, cell.Y);
+            Cell top = _map.GetCell(cell.X, cell.Y - 1);
+            Cell bottom = _map.GetCell(cell.X, cell.Y + 1);
+
+            // Sprawdzamy czy nie ma tutaj drzwi
+            if ( _map.GetDoor(cell.X, cell.Y) != null ||
+                _map.GetDoor(right.X, right.Y) != null ||
+                _map.GetDoor(left.X, left.Y) != null ||
+                _map.GetDoor(top.X, top.Y) != null ||
+                _map.GetDoor(bottom.X, bottom.Y) != null ) return false;
+
+            // Dobre miejse na wstawienie drzwi z lewej lub prawej strony
+            if (right.IsWalkable && left.IsWalkable && !top.IsWalkable && !bottom.IsWalkable) return true;
+
+            // Dobre miejse na wstawienie drzwi u góry lub dole
+            if (!right.IsWalkable && !left.IsWalkable && top.IsWalkable && bottom.IsWalkable) return true;
+
+            return false;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using RogalTutorial.Core;
+﻿using RLNET;
+using RogalTutorial.Core;
 using RogalTutorial.Interfaces;
 using RogueSharp;
 using RogueSharp.DiceNotation;
@@ -127,6 +128,11 @@ namespace RogalTutorial.Systems
             return false;
         }
 
+        /// <summary>
+        /// Akcja ataku
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="defender"></param>
         public void Attack(Actor attacker, Actor defender)
         {
             StringBuilder attackMessage = new StringBuilder();
@@ -138,22 +144,27 @@ namespace RogalTutorial.Systems
 
             Game.MessageLog.Add(attackMessage.ToString());
             if (!string.IsNullOrWhiteSpace(defenseMessage.ToString()))
-            {
                 Game.MessageLog.Add(defenseMessage.ToString());
-            }
 
             int damage = hits - blocks;
 
             ResolveDamage(defender, damage);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="defender"></param>
+        /// <param name="attackMessage"></param>
+        /// <returns></returns>
         private int ResolveAttack(Actor attacker, Actor defender, StringBuilder attackMessage)
         {
             int hits = 0;
 
-            attackMessage.AppendFormat("{0} attacks {1} and rolls: ", attacker.Name, defender.Name);
+            attackMessage.AppendFormat("{0} atakuje {1} i rzuca kością: ", attacker.Name, defender.Name);
 
-            // Roll a number of 100-sided dice equal to the Attack value of the attacking actor
+            // Atak to rzut kością 100ścienną
             DiceExpression attackDice = new DiceExpression().Dice(attacker.Attack, 100);
             DiceResult attackResult = attackDice.Roll();
 
@@ -171,6 +182,14 @@ namespace RogalTutorial.Systems
             return hits;
         }
 
+        /// <summary>
+        /// Akcja bloku
+        /// </summary>
+        /// <param name="defender"></param>
+        /// <param name="hits"></param>
+        /// <param name="attackMessage"></param>
+        /// <param name="defenseMessage"></param>
+        /// <returns></returns>
         private int ResolveDefense(Actor defender, int hits, StringBuilder attackMessage, StringBuilder defenseMessage)
         {
             int blocks = 0;
@@ -198,12 +217,17 @@ namespace RogalTutorial.Systems
             }
             else
             {
-                attackMessage.Append("and misses completely.");
+                attackMessage.Append("i chybia zupełnie.");
             }
 
             return blocks;
         }
 
+        /// <summary>
+        /// Akcja zadająca obrażenia
+        /// </summary>
+        /// <param name="defender"></param>
+        /// <param name="damage"></param>
         private static void ResolveDamage(Actor defender, int damage)
         {
             if (damage > 0)
@@ -235,6 +259,117 @@ namespace RogalTutorial.Systems
 
                 Game.MessageLog.Add($"  {defender.Name} died and dropped {defender.Gold} gold");
             }
+        }
+
+        public bool CloseDoor(Actor actor, DungeonMap map, RLRootConsole consola)
+        {
+            List<Door> Doors = new List<Door>();
+
+            Door right = map.GetDoor(actor.X + 1, actor.Y);
+            if(right != null) Doors.Add(right);
+
+            Door left = map.GetDoor(actor.X - 1, actor.Y);
+            if (left != null) Doors.Add(left);
+
+            Door top = map.GetDoor(actor.X, actor.Y - 1);
+            if (top != null) Doors.Add(top);
+
+            Door bottom = map.GetDoor(actor.X, actor.Y + 1);
+            if (bottom != null) Doors.Add(bottom);
+
+            Door topRight = map.GetDoor(actor.X + 1, actor.Y - 1);
+            if (topRight != null) Doors.Add(topRight);
+
+            Door topLeft = map.GetDoor(actor.X - 1, actor.Y - 1);
+            if (topLeft != null) Doors.Add(topLeft);
+
+            Door bottomLeft = map.GetDoor(actor.X - 1, actor.Y + 1);
+            if (bottomLeft != null) Doors.Add(bottomLeft);
+
+            Door bottomRigth = map.GetDoor(actor.X + 1, actor.Y + 1);
+            if (bottomRigth != null) Doors.Add(bottomRigth);
+
+            if (Doors.Count == 0) return false;
+            if (Doors.Count == 1)
+            {
+                Door door = Doors.FirstOrDefault(d => d.IsOpen);
+                if(door != null)
+                    map.CloseDoor(actor, door.X, door.Y);
+
+                map.UpdatePlayerFieldOfView();
+                return true;
+            }
+            if (Doors.Count > 1)
+            {
+                var result = false;
+                RLKeyPress keyPress = consola.Keyboard.GetKeyPress();
+                if (keyPress != null)
+                {
+                    switch (keyPress.Key)
+                    {
+                        case RLKey.Keypad8:
+                            if(top != null)
+                            {
+                                map.CloseDoor(actor, top.X, top.Y);
+                                result = true;
+                            }
+                            break;
+                        case RLKey.Keypad2:
+                            if (bottom != null)
+                            {
+                                map.CloseDoor(actor, bottom.X, bottom.Y);
+                                result = true;
+                            }
+                            break;
+                        case RLKey.Keypad4:
+                            if (left != null)
+                            {
+                                map.CloseDoor(actor, left.X, left.Y);
+                                result = true;
+                            }
+                            break;
+                        case RLKey.Keypad6:
+                            if (right != null)
+                            {
+                                map.CloseDoor(actor, right.X, right.Y);
+                                result = true;
+                            }
+                            break;
+                        case RLKey.Keypad7:
+                            if (topLeft != null)
+                            {
+                                map.CloseDoor(actor, topLeft.X, topLeft.Y);
+                                result = true;
+                            }
+                            break;
+                        case RLKey.Keypad9:
+                            if (topRight != null)
+                            {
+                                map.CloseDoor(actor, topRight.X, topRight.Y);
+                                result = true;
+                            }
+                            break;
+                        case RLKey.Keypad1:
+                            if (bottomLeft != null)
+                            {
+                                map.CloseDoor(actor, bottomLeft.X, bottomLeft.Y);
+                                result = true;
+                            }
+                            break;
+                        case RLKey.Keypad3:
+                            if (bottomRigth != null)
+                            {
+                                map.CloseDoor(actor, bottomRigth.X, bottomRigth.Y);
+                                result = true;
+                            }
+                            break;
+                    }
+                }
+                map.UpdatePlayerFieldOfView();
+                return result;
+            }
+
+            return false;
         }
     }
 }

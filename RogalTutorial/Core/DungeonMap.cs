@@ -23,6 +23,8 @@ namespace RogalTutorial.Core
         /// Lista potworów na mapie
         /// </summary>
         private readonly List<Monster> _monsters;
+
+        public List<Door> Doors;
         #endregion
 
         /// <summary>
@@ -32,6 +34,7 @@ namespace RogalTutorial.Core
         {
             Rooms = new List<Rectangle>();
             _monsters = new List<Monster>();
+            Doors = new List<Door>();
         }
 
         /// <summary>
@@ -72,6 +75,10 @@ namespace RogalTutorial.Core
                     monster.DrawStats(statConsole, i);
                     i++;
                 }
+
+            // Rysujemy drzwi na mapie
+            foreach(Door door in Doors)
+                door.Draw(mapConsole, this);
         }
 
         /// <summary>
@@ -100,7 +107,13 @@ namespace RogalTutorial.Core
                 if (cell.IsWalkable)
                     console.Set(cell.X, cell.Y, Colors.Floor, Colors.FloorBackground, '.');
                 else
-                    console.Set(cell.X, cell.Y, Colors.Wall, Colors.WallBackground, '#');
+                {
+                    var monster = GetMonsterAt(cell.X, cell.Y);
+                    if(monster != null)
+                        console.Set(cell.X, cell.Y, Colors.Floor, Colors.FloorBackground, '.');
+                    else
+                        console.Set(cell.X, cell.Y, Colors.Wall, Colors.WallBackground, '#');
+                }
             }
         }
 
@@ -139,6 +152,10 @@ namespace RogalTutorial.Core
                 actor.Y = y;
                 // Tylko jeden aktor może byc na komórce
                 SetIsWalkable(actor.X, actor.Y, false);
+
+                // Próbuje otworzyć drzwi
+                OpenDoor(actor, x, y);
+
                 // Aktualizuj obszar widoku gracza dla nowej pozycji
                 if (actor is Player)
                     UpdatePlayerFieldOfView();
@@ -193,15 +210,9 @@ namespace RogalTutorial.Core
         public bool DoesRoomHaveWalkableSpace(Rectangle room)
         {
             for (int x = 1; x <= room.Width - 2; x++)
-            {
                 for (int y = 1; y <= room.Height - 2; y++)
-                {
                     if (IsWalkable(x + room.X, y + room.Y))
-                    {
                         return true;
-                    }
-                }
-            }
             return false;
         }
 
@@ -240,6 +251,35 @@ namespace RogalTutorial.Core
         public Monster GetMonsterAt(int x, int y)
         {
             return _monsters.FirstOrDefault(m => m.X == x && m.Y == y);
+        }
+        #endregion
+
+        #region ########## Obsługa drzwi ##########
+        public Door GetDoor(int x, int y)
+        {
+            return Doors.SingleOrDefault(d => d.X == x && d.Y == y);
+        }
+
+        public void OpenDoor( Actor actor, int x, int y)
+        {
+            Door door = GetDoor(x, y);
+            if(door != null && !door.IsOpen)
+            {
+                door.IsOpen = true;
+                var cell = GetCell(x, y);
+                SetCellProperties(x, y, true, cell.IsWalkable, cell.IsExplored);
+            }
+        }
+
+        public void CloseDoor(Actor actor, int x, int y)
+        {
+            Door door = GetDoor(x, y);
+            if (door != null && door.IsOpen)
+            {
+                door.IsOpen = false;
+                var cell = GetCell(x, y);
+                SetCellProperties(x, y, false, cell.IsWalkable, cell.IsExplored);
+            }
         }
         #endregion
     }

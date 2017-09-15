@@ -154,6 +154,10 @@ namespace RogalTutorial
                     {
                         _rootConsole.Close();
                     }
+                    else if (keyPress.Key == RLKey.C)
+                    {
+                        didPlayerAct = CommandSystem.CloseDoor(Player, DungeonMap, _rootConsole);
+                    }
                 }
 
                 if (didPlayerAct)

@@ -1,0 +1,556 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RogalTutorial</name>
+    </assembly>
+    <members>
+        <member name="T:RogalTutorial.Behaviors.StandardMoveAndAttack">
+            <summary>
+            Klasa przechowująca podstawowy ruch i aktak
+            </summary>
+        </member>
+        <member name="T:RogalTutorial.Core.Actor">
+            <summary>
+            Bazowa klasa do tworzenie aktorów w grze
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._attack">
+            <summary>
+            Obrazenia zadawane przez aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._attackChance">
+            <summary>
+            Szansa na udany atak przez aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._awareness">
+            <summary>
+            Zasięg widzenia przez aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._defense">
+            <summary>
+            Obrona aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._defenseChance">
+            <summary>
+            Szanse na udaną obronę przez aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._gold">
+            <summary>
+            Posiadana ilość złota przez aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._health">
+            <summary>
+            Aktualny stan zdrowia aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._maxHealth">
+            <summary>
+            Maksymalny stan zdrowia aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._name">
+            <summary>
+            Nazwa aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._speed">
+            <summary>
+            Szybkość aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._color">
+            <summary>
+            Kolor wyświetlanego symbolu aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._symbol">
+            <summary>
+            Symbol aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._x">
+            <summary>
+            Położenie w konsoli symbolu aktora
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Actor._y">
+            <summary>
+            Położenie w konsoli symbolu aktora
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Core.Actor.Draw(RLNET.RLConsole,RogueSharp.IMap)">
+            <summary>
+            Rysowanie aktora na mapie
+            </summary>
+            <param name="console"></param>
+            <param name="map"></param>
+        </member>
+        <member name="T:RogalTutorial.Core.Colors">
+            <summary>
+            Klasa która łączy zdefiniowane kolory z obiektami w grze
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.Player">
+            <summary>
+            Kolor gracza
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.FloorBackground">
+            <summary>
+            Kolor tła dla podłogi
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.Floor">
+            <summary>
+            Kolor podłogi
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.FloorBackgroundFov">
+            <summary>
+            Kolor tła podłogi w obszarze widzenia gracza
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.FloorFov">
+            <summary>
+            Kolor podłogi w obszarze widzenia gracza
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.WallBackground">
+            <summary>
+            Kolor tła muru
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.Wall">
+            <summary>
+            Kolor muru
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.WallBackgroundFov">
+            <summary>
+            Kolor tła muru w obszarze widzenia gracza
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.WallFov">
+            <summary>
+            Kolor muru w obszarze widzenia gracza
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.TextHeading">
+            <summary>
+            Kolor nagłówków
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.Text">
+            <summary>
+            Kolor tekstu
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.Gold">
+            <summary>
+            Kolor złota
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.Colors.KoboldColor">
+            <summary>
+            Kolor dla kobolda
+            </summary>
+        </member>
+        <member name="T:RogalTutorial.Core.Direction">
+            <summary>
+            Kolor kierunków dla gracza
+            </summary>
+        </member>
+        <member name="T:RogalTutorial.Core.DungeonMap">
+            <summary>
+            Klasa narzędziowa do rysowania oraz obsługi map.
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.DungeonMap.Rooms">
+            <summary>
+            Lista pokoi na mapie
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Core.DungeonMap._monsters">
+            <summary>
+            Lista potworów na mapie
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.#ctor">
+            <summary>
+            Konstruktor który inicjalizuje pola
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.AddPlayer(RogalTutorial.Core.Player)">
+            <summary>
+            Metoda tworzy gracza na mapie 
+            </summary>
+            <param name="player">Obiekt gracza</param>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.Draw(RLNET.RLConsole,RLNET.RLConsole)">
+            <summary>
+            Metoda rysująca mapę
+            </summary>
+            <param name="mapConsole">Konsola na której będzie rysowana mapa</param>
+            <param name="statConsole">Konsola opisująca obiekty na mapie które widzi gracz</param>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.SetConsoleSymbolForCell(RLNET.RLConsole,RogueSharp.Cell)">
+            <summary>
+            Metoda przedstawia w jaki sposób rysuje każdą komórkę mapy
+            </summary>
+            <param name="console">Konsola mapy</param>
+            <param name="cell">Komórka w mapie</param>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.UpdatePlayerFieldOfView">
+            <summary>
+            Aktualizuje obszar widoku dla gracza
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.SetActorPosition(RogalTutorial.Core.Actor,System.Int32,System.Int32)">
+            <summary>
+            Zwraca wartość true, jeśli jest w stanie umieścić aktor na komórce lub fałsz w przeciwnym razie
+            </summary>
+            <param name="actor"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.SetIsWalkable(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Metoda pomocnicza. Ustawia możliwośc wejścia na komórkę o podanych współrzędnych
+            </summary>
+            <param name="x">Wspórzędna x komórki</param>
+            <param name="y">Wspórzędna y komórki</param>
+            <param name="isWalkable">Ustaw czy można wejść na komórkę o podanych współrzędnych</param>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.GetRandomWalkableLocationInRoom(RogueSharp.Rectangle)">
+            <summary>
+            Poszukaj losowej lokacji w pokoju na którą można wejść
+            </summary>
+            <param name="room">Prostokąt który reprezentuje pokój</param>
+            <returns>
+            Jeśli nie znaleziono lokacji zwróć null, w innym przypadku zwróć obiekt Point
+            </returns>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.DoesRoomHaveWalkableSpace(RogueSharp.Rectangle)">
+            <summary>
+            Iteruj przez każdą komórkę w pokoju i zwróć prawdę, jeśli są one walkable
+            </summary>
+            <param name="room">Prostokąt który reprezentuje pokój</param>
+            <returns></returns>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.AddMonster(RogalTutorial.Core.Monster)">
+            <summary>
+            Dodaj potwora do listy potworów na aktualnej mapie
+            </summary>
+            <param name="monster"></param>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.RemoveMonster(RogalTutorial.Core.Monster)">
+            <summary>
+            Usuń potworka z mapy jeśli go już zabiłeś
+            </summary>
+            <param name="monster"></param>
+        </member>
+        <member name="M:RogalTutorial.Core.DungeonMap.GetMonsterAt(System.Int32,System.Int32)">
+            <summary>
+            Pobierz potworka znajdującego się w lokacji o wspł. x i y
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="T:RogalTutorial.Core.Monster">
+            <summary>
+            Bazowa klasa dla potworków
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Core.Monster.DrawStats(RLNET.RLConsole,System.Int32)">
+            <summary>
+            Rysuj potworka na konsoli ze statystykami
+            </summary>
+            <param name="statConsole"></param>
+            <param name="position"></param>
+        </member>
+        <member name="T:RogalTutorial.Core.Player">
+            <summary>
+            Klasa gracza
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Core.Player.DrawStats(RLNET.RLConsole)">
+            <summary>
+            Metoda rysuje statystyki postaci
+            </summary>
+            <param name="statConsole"></param>
+        </member>
+        <member name="T:RogalTutorial.Core.Swatch">
+            <summary>
+            Klasa defninująca kolory
+            </summary>
+        </member>
+        <member name="T:RogalTutorial.Game">
+            <summary>
+            Główna klasa gry
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Game.OnRootConsoleUpdate(System.Object,RLNET.UpdateEventArgs)">
+            <summary>
+            Akcja przyjmuje input od gracza oraz zarządza turami
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:RogalTutorial.Game.OnRootConsoleRender(System.Object,RLNET.UpdateEventArgs)">
+            <summary>
+            Akcja renderująca
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:RogalTutorial.Interfaces.IActor">
+            <summary>
+            Interface dla Aktora
+            </summary>
+        </member>
+        <member name="T:RogalTutorial.Interfaces.IBehavior">
+            <summary>
+            Interace dla zachowań potworków
+            </summary>
+        </member>
+        <member name="T:RogalTutorial.Interfaces.IDrawable">
+            <summary>
+            Interace służący do rysowania na konsoli
+            </summary>
+        </member>
+        <member name="P:RogalTutorial.Interfaces.IDrawable.X">
+            <summary>
+            wspł X
+            </summary>
+        </member>
+        <member name="P:RogalTutorial.Interfaces.IDrawable.Y">
+            <summary>
+            wspł Y
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Interfaces.IDrawable.Draw(RLNET.RLConsole,RogueSharp.IMap)">
+            <summary>
+            Metoda rysująca 
+            </summary>
+            <param name="console">która konsola</param>
+            <param name="map">która mapa</param>
+        </member>
+        <member name="M:RogalTutorial.Monsters.Kobold.Create(System.Int32)">
+            <summary>
+            Klasa kobolda
+            </summary>
+            <param name="level">Który poziom kobolda</param>
+            <returns></returns>
+        </member>
+        <member name="M:RogalTutorial.Systems.CommandSystem.EndPlayerTurn">
+            <summary>
+            Ustaw koniec tury gracza
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Systems.CommandSystem.ActivateMonsters">
+            <summary>
+            Aktywuje tury potworką dopuki nie będzie tury gracza
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Systems.CommandSystem.MoveMonster(RogalTutorial.Core.Monster,RogueSharp.Cell)">
+            <summary>
+            Ruch potworka na wskazaną lokację.
+            Jeśli jest zajęta przez gracza to wykonaj atak.
+            </summary>
+            <param name="monster"></param>
+            <param name="cell"></param>
+        </member>
+        <member name="M:RogalTutorial.Systems.CommandSystem.MovePlayer(RogalTutorial.Core.Direction)">
+            <summary>
+            Aktualizuj pozycję gracza
+            </summary>
+            <param name="direction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RogalTutorial.Systems.CommandSystem.Attack(RogalTutorial.Core.Actor,RogalTutorial.Core.Actor)">
+            <summary>
+            Akcja ataku
+            </summary>
+            <param name="attacker"></param>
+            <param name="defender"></param>
+        </member>
+        <member name="M:RogalTutorial.Systems.CommandSystem.ResolveAttack(RogalTutorial.Core.Actor,RogalTutorial.Core.Actor,System.Text.StringBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="attacker"></param>
+            <param name="defender"></param>
+            <param name="attackMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RogalTutorial.Systems.CommandSystem.ResolveDefense(RogalTutorial.Core.Actor,System.Int32,System.Text.StringBuilder,System.Text.StringBuilder)">
+            <summary>
+            Akcja bloku
+            </summary>
+            <param name="defender"></param>
+            <param name="hits"></param>
+            <param name="attackMessage"></param>
+            <param name="defenseMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RogalTutorial.Systems.CommandSystem.ResolveDamage(RogalTutorial.Core.Actor,System.Int32)">
+            <summary>
+            Akcja zadająca obrażenia
+            </summary>
+            <param name="defender"></param>
+            <param name="damage"></param>
+        </member>
+        <member name="T:RogalTutorial.Systems.MapGenerator">
+            <summary>
+            Klasa generująca losową mapę
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Systems.MapGenerator._width">
+            <summary>
+            Szerokość mapy
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Systems.MapGenerator._height">
+            <summary>
+            Wysokość mapy
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Systems.MapGenerator._maxRooms">
+            <summary>
+            Maksymalna ilość pokoi na mapie
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Systems.MapGenerator._roomMaxSize">
+            <summary>
+            Maksymalna wielkość pokoju
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Systems.MapGenerator._roomMinSize">
+            <summary>
+            Minimalna wielkość pokoju
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Systems.MapGenerator._map">
+            <summary>
+            Mapa
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Systems.MapGenerator.PlacePlayer">
+            <summary>
+            Ustawia gracza na mapie
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Systems.MapGenerator.CreateMap">
+            <summary>
+            Tworzy mapę
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RogalTutorial.Systems.MapGenerator.CreateRoom(RogueSharp.Rectangle)">
+            <summary>
+            Ustaw podłogę w pokojach
+            </summary>
+            <param name="room"></param>
+        </member>
+        <member name="M:RogalTutorial.Systems.MapGenerator.CreateHorizontalTunnel(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Zbuduj tunel poziomy
+            </summary>
+            <param name="xStart"></param>
+            <param name="xEnd"></param>
+            <param name="yPosition"></param>
+        </member>
+        <member name="M:RogalTutorial.Systems.MapGenerator.CreateVerticalTunnel(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Zbuduj tunel pionowy
+            </summary>
+            <param name="yStart"></param>
+            <param name="yEnd"></param>
+            <param name="xPosition"></param>
+        </member>
+        <member name="M:RogalTutorial.Systems.MapGenerator.PlaceMonsters">
+            <summary>
+            Metoda ustawia potwora
+            </summary>
+        </member>
+        <member name="T:RogalTutorial.Systems.MessageLog">
+            <summary>
+            Klasa dla logów
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Systems.MessageLog._maxLines">
+            <summary>
+            Maksymalna ilość logów
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Systems.MessageLog._lines">
+            <summary>
+            kolejka
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Systems.MessageLog.Add(System.String)">
+            <summary>
+            Dodaj wiadomość do kolejki
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:RogalTutorial.Systems.MessageLog.Draw(RLNET.RLConsole)">
+            <summary>
+            Rysuj linie logów w konsoli
+            </summary>
+            <param name="console"></param>
+        </member>
+        <member name="T:RogalTutorial.Systems.SchedulingSystem">
+            <summary>
+            Kolejność poruszania się różnych aktorów
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Systems.SchedulingSystem._time">
+            <summary>
+            tura
+            </summary>
+        </member>
+        <member name="F:RogalTutorial.Systems.SchedulingSystem._scheduleables">
+            <summary>
+            Słownik który 
+            </summary>
+        </member>
+        <member name="M:RogalTutorial.Systems.SchedulingSystem.Add(RogalTutorial.Interfaces.IScheduleable)">
+            <summary>
+            Dodaj nowy obiekt do harmonogramu
+            </summary>
+            <param name="scheduleable"></param>
+        </member>
+        <member name="M:RogalTutorial.Systems.SchedulingSystem.Remove(RogalTutorial.Interfaces.IScheduleable)">
+            <summary>
+            Usuń obiekt z harmonogramu
+            </summary>
+            <param name="scheduleable"></param>
+        </member>
+        <member name="M:RogalTutorial.Systems.SchedulingSystem.Get">
+            <summary>
+            Pobierz hanmonogram
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RogalTutorial.Systems.SchedulingSystem.GetTime">
+            <summary>
+            Pobierz aktualny czas dla harmonogramu
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RogalTutorial.Systems.SchedulingSystem.Clear">
+            <summary>
+            Resetuj czas oraz wyczyść listę harmonogram
+            </summary>
+        </member>
+    </members>
+</doc>

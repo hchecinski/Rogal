@@ -11,3 +11,4 @@ C:\GitHub\Rogal\RogalTutorial\bin\Debug\RLNET.dll
 C:\GitHub\Rogal\RogalTutorial\bin\Debug\RogueSharp.dll
 C:\GitHub\Rogal\RogalTutorial\bin\Debug\OpenTK.xml
 C:\GitHub\Rogal\RogalTutorial\bin\Debug\RogueSharp.xml
+C:\GitHub\Rogal\RogalTutorial\bin\Debug\RogalTutorial.XML
