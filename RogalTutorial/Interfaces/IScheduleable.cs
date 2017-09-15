@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RogalTutorial.Interfaces
 {
+
     public interface IScheduleable
     {
         int Time { get; }

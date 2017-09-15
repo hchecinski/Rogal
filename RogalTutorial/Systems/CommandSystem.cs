@@ -14,14 +14,23 @@ namespace RogalTutorial.Systems
     {
         public bool IsPlayerTurn { get; set; }
 
+        /// <summary>
+        /// Ustaw koniec tury gracza
+        /// </summary>
         public void EndPlayerTurn()
         {
             IsPlayerTurn = false;
         }
 
+        /// <summary>
+        /// Aktywuje tury potworką dopuki nie będzie tury gracza
+        /// </summary>
         public void ActivateMonsters()
         {
             IScheduleable scheduleable = Game.SchedulingSystem.Get();
+
+            // Jeśli pobrany obiekt to gracz, aktywuj jego turę
+            // w innym przypadku wykonaj turę potworka
             if (scheduleable is Player)
             {
                 IsPlayerTurn = true;
@@ -41,17 +50,24 @@ namespace RogalTutorial.Systems
             }
         }
 
+        /// <summary>
+        /// Ruch potworka na wskazaną lokację.
+        /// Jeśli jest zajęta przez gracza to wykonaj atak.
+        /// </summary>
+        /// <param name="monster"></param>
+        /// <param name="cell"></param>
         public void MoveMonster(Monster monster, Cell cell)
         {
             if (!Game.DungeonMap.SetActorPosition(monster, cell.X, cell.Y))
-            {
                 if (Game.Player.X == cell.X && Game.Player.Y == cell.Y)
-                {
                     Attack(monster, Game.Player);
-                }
-            }
         }
 
+        /// <summary>
+        /// Aktualizuj pozycję gracza
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
         public bool MovePlayer(Direction direction)
         {
             int x = Game.Player.X;
@@ -95,13 +111,13 @@ namespace RogalTutorial.Systems
                         return false;
             }
 
+            //Jeśli pole jest puste to przesuń gracza
             if (Game.DungeonMap.SetActorPosition(Game.Player, x, y))
-            {
                 return true;
-            }
 
             Monster monster = Game.DungeonMap.GetMonsterAt(x, y);
 
+            //Jeśli na lokacji znajduję sie potworek to go zaatakuj
             if (monster != null)
             {
                 Attack(Game.Player, monster);

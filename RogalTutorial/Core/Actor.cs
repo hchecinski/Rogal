@@ -9,24 +9,82 @@ using RogueSharp;
 
 namespace RogalTutorial.Core
 {
+    /// <summary>
+    /// Bazowa klasa do tworzenie aktorów w grze
+    /// </summary>
     public class Actor : IActor, IDrawable, IScheduleable
     {
-        // IActor
+        /// <summary>
+        /// Obrazenia zadawane przez aktora
+        /// </summary>
         private int _attack;
+
+        /// <summary>
+        /// Szansa na udany atak przez aktora
+        /// </summary>
         private int _attackChance;
+
+        /// <summary>
+        /// Zasięg widzenia przez aktora
+        /// </summary>
         private int _awareness;
+
+        /// <summary>
+        /// Obrona aktora
+        /// </summary>
         private int _defense;
+
+        /// <summary>
+        /// Szanse na udaną obronę przez aktora
+        /// </summary>
         private int _defenseChance;
+
+        /// <summary>
+        /// Posiadana ilość złota przez aktora
+        /// </summary>
         private int _gold;
+
+        /// <summary>
+        /// Aktualny stan zdrowia aktora
+        /// </summary>
         private int _health;
+
+        /// <summary>
+        /// Maksymalny stan zdrowia aktora
+        /// </summary>
         private int _maxHealth;
+
+        /// <summary>
+        /// Nazwa aktora
+        /// </summary>
         private string _name;
+
+        /// <summary>
+        /// Szybkość aktora
+        /// </summary>
         private int _speed;
+
+        /// <summary>
+        /// Kolor wyświetlanego symbolu aktora
+        /// </summary>
         private RLColor _color;
+
+        /// <summary>
+        /// Symbol aktora
+        /// </summary>
         private char _symbol;
+
+        /// <summary>
+        /// Położenie w konsoli symbolu aktora
+        /// </summary>
         private int _x;
+
+        /// <summary>
+        /// Położenie w konsoli symbolu aktora
+        /// </summary>
         private int _y;
 
+        #region ########## Właściwości ##########
         public int Attack
         {
             get
@@ -206,24 +264,24 @@ namespace RogalTutorial.Core
                 return Speed;
             }
         }
+        #endregion
 
+        /// <summary>
+        /// Rysowanie aktora na mapie
+        /// </summary>
+        /// <param name="console"></param>
+        /// <param name="map"></param>
         public void Draw(RLConsole console, IMap map)
         {
             //Nie rysuj postaci jeśli nie została odkryta
             if (!map.GetCell(X, Y).IsExplored)
-            {
                 return;
-            }
 
             //Rysuj tylko aktorów którzy są widzalni przez bohatera
             if (map.IsInFov(X, Y))
-            {
                 console.Set(X, Y, Color, Colors.FloorBackgroundFov, Symbol);
-            }
             else
-            {
                 console.Set(X, Y, Colors.Floor, Colors.FloorBackground, '.');
-            }
         }
     }
 }

@@ -7,13 +7,19 @@ using System.Threading.Tasks;
 
 namespace RogalTutorial.Systems
 {
+    /// <summary>
+    /// Klasa dla logów
+    /// </summary>
     public class MessageLog
     {
-        // Define the maximum number of lines to store
+        /// <summary>
+        /// Maksymalna ilość logów
+        /// </summary>
         private static readonly int _maxLines = 9;
 
-        // Use a Queue to keep track of the lines of text
-        // The first line added to the log will also be the first removed
+        /// <summary>
+        /// kolejka
+        /// </summary>
         private readonly Queue<string> _lines;
 
         public MessageLog()
@@ -21,19 +27,25 @@ namespace RogalTutorial.Systems
             _lines = new Queue<string>();
         }
 
-        // Add a line to the MessageLog queue
+        /// <summary>
+        /// Dodaj wiadomość do kolejki
+        /// </summary>
+        /// <param name="message"></param>
         public void Add(string message)
         {
-            _lines.Enqueue(message);
+            _lines.Enqueue(message);//Dodaje obiekt do końca kolejki
 
-            // When exceeding the maximum number of lines remove the oldest one.
+            // Jeśli lini jest za dużo to usuń pierwszy wiersz
             if (_lines.Count > _maxLines)
             {
                 _lines.Dequeue();
             }
         }
 
-        // Draw each line of the MessageLog queue to the console
+        /// <summary>
+        /// Rysuj linie logów w konsoli
+        /// </summary>
+        /// <param name="console"></param>
         public void Draw(RLConsole console)
         {
             console.Clear();

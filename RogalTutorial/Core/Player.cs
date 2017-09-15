@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace RogalTutorial.Core
 {
+    /// <summary>
+    /// Klasa gracza
+    /// </summary>
     public class Player : Actor
     {
         public Player()
@@ -25,6 +28,10 @@ namespace RogalTutorial.Core
             Symbol = '@';
         }
 
+        /// <summary>
+        /// Metoda rysuje statystyki postaci
+        /// </summary>
+        /// <param name="statConsole"></param>
         public void DrawStats(RLConsole statConsole)
         {
             statConsole.Print(1, 1, $"Name:    {Name}", Colors.Text);

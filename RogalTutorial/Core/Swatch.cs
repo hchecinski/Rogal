@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace RogalTutorial.Core
 {
-    //Próbka
+    /// <summary>
+    /// Klasa defninująca kolory
+    /// </summary>
     public class Swatch
     {
         // http://paletton.com/#uid=73d0u0k5qgb2NnT41jT74c8bJ8X

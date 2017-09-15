@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RogalTutorial.Core
 {
+    /// <summary>
+    /// Kolor kierunków dla gracza
+    /// </summary>
     public enum Direction
     {
         None = 0,

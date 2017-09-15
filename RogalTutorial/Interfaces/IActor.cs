@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RogalTutorial.Interfaces
 {
+    /// <summary>
+    /// Interface dla Aktora
+    /// </summary>
     public interface IActor
     {
         int Attack { get; set; }

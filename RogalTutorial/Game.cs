@@ -10,9 +10,13 @@ using RogueSharp.Random;
 
 namespace RogalTutorial
 {
+    /// <summary>
+    /// Główna klasa gry
+    /// </summary>
     class Game
     {
-        // The screen height and width are in number of tiles
+        #region
+        // Wielkość okna gry
         private static readonly int _screenWidth = 100;
         private static readonly int _screenHeight = 70;
         private static RLRootConsole _rootConsole;
@@ -38,7 +42,6 @@ namespace RogalTutorial
         private static RLConsole _inventoryConsole;
 
         private static bool _renderRequired = true;
-
         public static Player Player { get; set; }
         public static DungeonMap DungeonMap { get; private set; }
         public static CommandSystem CommandSystem { get; private set; }
@@ -47,34 +50,34 @@ namespace RogalTutorial
 
         // We can use this instance of IRandom throughout our game when generating random number
         public static IRandom Random { get; private set; }
+        #endregion
 
         public static void Main()
         {
-            // Establish the seed for the random number generator from the current time
+            #region ########## Ustawienie ziarna dla wielkości losowej ##########
             int seed = (int)DateTime.UtcNow.Ticks;
             Random = new DotNetRandom(seed);
+            #endregion
+
+            // Stworzenie harmonogramu aby wiedzieć kto kiedy wykonuje swoją turę
             SchedulingSystem = new SchedulingSystem();
-            // This must be the exact name of the bitmap font file we are using or it will error.
-            string fontFileName = "terminal8x8.png";
 
-            // The title will appear at the top of the console window along with the seed used to generate the level
-            string consoleTitle = $"RougeSharp V3 Tutorial";
+            // Ustawienia konsol
+            _rootConsole = new RLRootConsole("terminal8x8.png", _screenWidth, _screenHeight, 8, 8, 1f, $"RougeSharp V3 Tutorial");
 
-            // Tell RLNet to use the bitmap font that we specified and that each tile is 8 x 8 pixels
-            _rootConsole = new RLRootConsole(fontFileName, _screenWidth, _screenHeight, 8, 8, 1f, consoleTitle);
-
-            // Initialize the sub consoles that we will Blit to the root console
             _mapConsole = new RLConsole(_mapWidth, _mapHeight);
             _messageConsole = new RLConsole(_messageWidth, _messageHeight);
             _statConsole = new RLConsole(_statWidth, _statHeight);
             _inventoryConsole = new RLConsole(_inventoryWidth, _inventoryHeight);
             
+            // Tworzenie mapy
             MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight, 20, 13, 7);
             DungeonMap = mapGenerator.CreateMap();
             DungeonMap.UpdatePlayerFieldOfView();
 
             CommandSystem = new CommandSystem();
 
+            #region ########## Ustawienie konsol ##########
             // Set up a handler for RLNET's Update event
             _rootConsole.Update += OnRootConsoleUpdate;
 
@@ -93,12 +96,16 @@ namespace RogalTutorial
 
             _inventoryConsole.SetBackColor(0, 0, _inventoryWidth, _inventoryHeight, Swatch.DbWood);
             _inventoryConsole.Print(1, 1, "Inventory", Colors.TextHeading);
-
-            // Begin RLNET's game loop
+            #endregion
+            
             _rootConsole.Run();
         }
 
-        // Event handler for RLNET's Update event
+        /// <summary>
+        /// Akcja przyjmuje input od gracza oraz zarządza turami
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void OnRootConsoleUpdate(object sender, UpdateEventArgs e)
         {
             bool didPlayerAct = false;
@@ -107,6 +114,7 @@ namespace RogalTutorial
             {
                 if (keyPress != null)
                 {
+                    #region ########## Klawisze poruszania się ##########
                     if (keyPress.Key == RLKey.Up || keyPress.Key == RLKey.Keypad8)
                     {
                         didPlayerAct = CommandSystem.MovePlayer(Direction.Up);
@@ -139,6 +147,9 @@ namespace RogalTutorial
                     {
                         didPlayerAct = CommandSystem.MovePlayer(Direction.DownRight);
                     }
+
+                    #endregion
+
                     else if (keyPress.Key == RLKey.Escape)
                     {
                         _rootConsole.Close();
@@ -157,11 +168,15 @@ namespace RogalTutorial
                 _renderRequired = true;
             }
         }
-
-        // Event handler for RLNET's Render event
+        
+        /// <summary>
+        /// Akcja renderująca
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)
         {
-            // Don't bother redrawing all of the consoles if nothing has changed.
+            // Rysuj jeśli skończyła się tura potworków albo gracza
             if (_renderRequired)
             {
                 _mapConsole.Clear();
@@ -173,7 +188,7 @@ namespace RogalTutorial
                 MessageLog.Draw(_messageConsole);
                 Player.DrawStats(_statConsole);
 
-                // Blit the sub consoles to the root console in the correct locations
+                // Ułóż konsole w oknie gry
                 RLConsole.Blit(_mapConsole, 0, 0, _mapWidth, _mapHeight, _rootConsole, 0, _inventoryHeight);
                 RLConsole.Blit(_messageConsole, 0, 0, _messageWidth, _messageHeight, _rootConsole, 0, _screenHeight - _messageHeight);
                 RLConsole.Blit(_statConsole, 0, 0, _statWidth, _statHeight, _rootConsole, _mapWidth, 0);

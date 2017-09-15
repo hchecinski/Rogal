@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace RogalTutorial.Interfaces
 {
+    /// <summary>
+    /// Interace dla zachowań potworków
+    /// </summary>
     public interface IBehavior
     {
         bool Act( Monster monster, CommandSystem commandSystem );

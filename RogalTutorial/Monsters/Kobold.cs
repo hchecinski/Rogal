@@ -10,6 +10,11 @@ namespace RogalTutorial.Monsters
 {
     public class Kobold : Monster
     {
+        /// <summary>
+        /// Klasa kobolda
+        /// </summary>
+        /// <param name="level">Który poziom kobolda</param>
+        /// <returns></returns>
         public static Kobold Create(int level)
         {
             int health = Dice.Roll("2D6");
